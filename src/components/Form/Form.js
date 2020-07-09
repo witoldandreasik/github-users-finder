@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Result from "../result/Result";
 import "./Form.css";
 
 function Form() {
@@ -7,13 +8,14 @@ function Form() {
   const [avatar, setAvatar] = useState("");
   const [follows, setFollows] = useState("");
   const [following, setFollowing] = useState("");
-  const [repositories, setRepositories] = useState("");
+  const [repoCount, setRepoCount] = useState("");
   const [htmlUrl, setHtmlUrl] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [err, setErr] = useState(null);
+  const [repData, setRepData] = useState([]);
 
   useEffect(() => {
-    fetch("https://api.github.com/users/example")
+    fetch("https://api.github.com/users/witoldandreasik")
       .then((res) => res.json())
       .then((userData) => getUserData(userData));
   }, []);
@@ -33,7 +35,7 @@ function Form() {
     setAvatar(avatar_url);
     setFollows(followers);
     setFollowing(following);
-    setRepositories(public_repos);
+    setRepoCount(public_repos);
     setHtmlUrl(html_url);
   };
 
@@ -55,11 +57,18 @@ function Form() {
       })
       .catch(console.log(err));
   };
-
-  const getRepos = () => {};
-
+  const getRepos = async () => {
+    const profile = await fetch(`https://api.github.com/users/${userName}`);
+    const profileJson = await profile.json();
+    const repos = await fetch(profileJson.repos_url);
+    const reposJson = await repos.json();
+    console.log(reposJson);
+    if (profileJson) {
+      setRepData(reposJson);
+    }
+  };
   return (
-    <div className="container">
+    <>
       <div className="search">
         <form className="search__form" onSubmit={handleSubmit}>
           <input
@@ -72,33 +81,21 @@ function Form() {
           <button className="search__button">Search</button>
         </form>
       </div>
-      {err ? (
-        <h1 className="result__not-found">{`${inputValue} ${err.toLowerCase()}`}</h1>
-      ) : (
-        <div className="result">
-          <img className="result__avatar" src={avatar} alt="github avatar" />
-          <h2 className="result__name">{name}</h2>
-          <h3 className="result__user-name">{userName}</h3>
-          <div>
-            <p className="result__info">Followers: {follows}</p>
-            <p className="result__info">Following: {following}</p>
-            <p className="result__info">Public repos: {repositories}</p>
-          </div>
 
-          <a
-            href={htmlUrl}
-            className="result__user-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Profile
-          </a>
-          <button className="result__button-repos" onClick={getRepos}>
-            Get repos
-          </button>
-        </div>
-      )}
-    </div>
+      <Result
+        name={name}
+        userName={userName}
+        inputValue={inputValue}
+        avatar={avatar}
+        follows={follows}
+        following={following}
+        repoCount={repoCount}
+        htmlUrl={htmlUrl}
+        err={err}
+        getRepos={getRepos}
+        repData={repData}
+      />
+    </>
   );
 }
 
