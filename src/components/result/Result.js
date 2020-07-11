@@ -45,8 +45,9 @@ function Result({
         <h2 className="repos__title">Repositories</h2>
         {repData.map((repo) => (
           <div className="repos__item" key={repo.id}>
-            <p className="repos__info">Name:{repo.name}</p>
+            <h3 className="repos__name">Name: {repo.name}</h3>
             <p className="repos__info">Default branch: {repo.default_branch}</p>
+            <p className="repos__info">Watchers: {repo.watchers_count}</p>
             <p className="repos__info">Forks: {repo.forks_count}</p>
             <a
               className="repos__link"
