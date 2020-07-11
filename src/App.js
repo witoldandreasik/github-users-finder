@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Result from "./components/Result/Result";
 import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
 import "./App.css";
+import ToTopButton from "./components/ToTopButton/ToTopButton";
 
 function App() {
   const [name, setName] = useState("");
@@ -58,6 +59,7 @@ function App() {
       })
       .catch(console.log(err));
   };
+  // need to change it coz to doesn't work on submit
   const getRepos = async () => {
     const profile = await fetch(`https://api.github.com/users/${userName}`);
     const profileJson = await profile.json();
@@ -98,6 +100,8 @@ function App() {
           repData={repData}
         />
       </Suspense>
+
+      <ToTopButton />
     </div>
   );
 }
