@@ -8,7 +8,7 @@ function ToTopButton() {
   };
   return (
     <button className="button" onClick={toTop}>
-      <em className="fas fa-angle-up"></em>
+      <em className="button__icon fas fa-angle-up"></em>
     </button>
   );
 }
