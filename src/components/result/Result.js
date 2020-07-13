@@ -11,7 +11,7 @@ function Result({
   htmlUrl,
   err,
   getRepos,
-  repData,
+  repositoriesData,
 }) {
   return (
     <>
@@ -43,7 +43,7 @@ function Result({
       )}
       <div className="repos">
         <h2 className="repos__title">Repositories</h2>
-        {repData.map((repo) => (
+        {repositoriesData.map((repo) => (
           <div className="repos__item" key={repo.id}>
             <h3 className="repos__name">Name: {repo.name}</h3>
             <p className="repos__info">Default branch: {repo.default_branch}</p>
