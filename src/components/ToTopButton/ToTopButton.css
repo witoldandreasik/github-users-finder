@@ -11,5 +11,6 @@
   color: white;
   cursor: pointer;
   letter-spacing: 1px;
+  outline: none;
   transition: 0.3s ease-in-out;
 }

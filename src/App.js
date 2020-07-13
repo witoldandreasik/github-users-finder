@@ -15,8 +15,10 @@ function App() {
   const [htmlUrl, setHtmlUrl] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [err, setErr] = useState(null);
-  const [repData, setRepData] = useState([]);
-
+  const [repositoriesData, setRepositoriesData] = useState([]);
+  const [scrollValue, setScrollValue] = useState(
+    document.body.scrollTop || document.documentElement.scrollTop
+  );
   useEffect(() => {
     fetch("https://api.github.com/users/witoldandreasik")
       .then((res) => res.json())
@@ -67,9 +69,19 @@ function App() {
     const reposJson = await repos.json();
 
     if (profileJson) {
-      setRepData(reposJson);
+      setRepositoriesData(reposJson);
     }
   };
+
+  const handleScroll = () => {
+    setScrollValue(
+      document.body.scrollTop || document.documentElement.scrollTop
+    );
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    console.log(scrollValue);
+  }, [scrollValue]);
   return (
     <div className="app">
       <Navbar />
@@ -97,11 +109,11 @@ function App() {
           htmlUrl={htmlUrl}
           err={err}
           getRepos={getRepos}
-          repData={repData}
+          repositoriesData={repositoriesData}
         />
       </Suspense>
 
-      <ToTopButton />
+      {scrollValue > 130 ? <ToTopButton /> : ""}
     </div>
   );
 }
