@@ -1,26 +1,29 @@
-import React, { useState, useEffect } from "react";
-import Result from "../Result/Result";
+import React, { useState, useEffect, Suspense } from "react";
 import "./UserProfile.css";
-
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
+const Result = React.lazy(() => import("../Result/Result"));
 function UserProfile() {
   const [userName, setUserName] = useState("");
   const [repositoriesData, setRepositoriesData] = useState([]);
   const [profileData, setProfileData] = useState({});
   const [error, setError] = useState(undefined);
 
-  useEffect(async () => {
-    const profileData = await fetch(
-      `https://api.github.com/users/witoldandreasik`
-    );
-    const profileDataJson = await profileData.json();
+  useEffect(() => {
+    async function fetchData() {
+      const profileData = await fetch(
+        `https://api.github.com/users/witoldandreasik`
+      );
+      const profileDataJson = await profileData.json();
 
-    const repos = await fetch(profileDataJson.repos_url);
-    const reposJson = await repos.json();
+      const repos = await fetch(profileDataJson.repos_url);
+      const reposJson = await repos.json();
 
-    if (profileDataJson) {
-      setProfileData(profileDataJson);
-      setRepositoriesData(reposJson);
+      if (profileDataJson) {
+        setProfileData(profileDataJson);
+        setRepositoriesData(reposJson);
+      }
     }
+    fetchData();
   }, []);
 
   const handleInputValue = (e) => {
@@ -57,12 +60,13 @@ function UserProfile() {
           <button className="search__button">Search</button>
         </form>
       </div>
-      {console.log(error)}
-      <Result
-        profileData={profileData}
-        repositoriesData={repositoriesData}
-        error={error}
-      />
+      <Suspense fallback={<LoadingIndicator />}>
+        <Result
+          profileData={profileData}
+          repositoriesData={repositoriesData}
+          error={error}
+        />
+      </Suspense>
     </>
   );
 }
