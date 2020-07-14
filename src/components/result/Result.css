@@ -63,6 +63,10 @@
   border-radius: 10px;
 }
 
+.result__not-found {
+  text-align: center;
+}
+
 .repos {
   display: flex;
   align-items: center;

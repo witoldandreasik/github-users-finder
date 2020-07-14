@@ -2,7 +2,7 @@
   position: fixed;
   width: 40px;
   height: 40px;
-  bottom: 3%;
+  bottom: 80px;
   right: 3%;
   background-color: rgb(33, 47, 122);
   border: 2px solid rgb(33, 47, 122);
@@ -14,19 +14,13 @@
   outline: none;
   transition: 0.3s ease-in-out;
 }
-
-.button__icon {
-  animation: arrow-up 1s linear infinite;
+.button:hover {
+  background-color: rgb(15, 20, 49);
+  border-color: rgb(15, 20, 49);
+  transform: translateY(-3px);
 }
-
-@keyframes arrow-up {
-  0% {
-    transform: translateY(-1px);
-  }
-  45% {
-    transform: translateY(-3px);
-  }
-  100% {
-    transform: translateY(-1px);
+@media (min-width: 768px) {
+  .button {
+    bottom: 8%;
   }
 }
