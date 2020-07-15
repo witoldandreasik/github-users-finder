@@ -1,7 +1,0 @@
-.button-bottom {
-  bottom: 30px;
-  right: 3%;
-}
-.button-bottom:hover {
-  transform: translateY(3px);
-}

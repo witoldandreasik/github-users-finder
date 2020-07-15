@@ -1,8 +1,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import ToTopButton from "./components/ToTopButton/ToTopButton";
-import ToBottomButton from "./components/ToBottomButton/ToBottomButton";
-import "./App.css";
 import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
+import "./App.css";
 
 const Navbar = React.lazy(() => import("./components/Navbar/Navbar"));
 const UserProfile = React.lazy(() =>
@@ -30,7 +29,6 @@ function App() {
         <Navbar />
         <UserProfile />
         {scrollValue > 130 ? <ToTopButton /> : null}
-        <ToBottomButton />
       </Suspense>
     </div>
   );
