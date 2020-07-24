@@ -2,10 +2,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Github users finder
 
-Used technologies:
--React with hooks
--Github API
--BEM metodology
+Used technologies: <br />
+
+-React with hooks <br />
+-Github API <br />
+-BEM metodology <br />
 
 
 
